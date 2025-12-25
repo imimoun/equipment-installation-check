@@ -10,7 +10,7 @@
   <main class="main-container">
     <div class="card">
       <h1>Equipment Installation</h1>
-      <p>Select the equipment and click the button to trigger the automated check.</p>
+      <p>Select the equipment, upload your video, and trigger the automated check.</p>
       
       <div class="form-group">
         <label for="equipment-select">Select Equipment:</label>
@@ -23,6 +23,17 @@
             <option [value]="item">{{ item }}</option>
           }
         </select>
+      </div>
+
+      <div class="form-group">
+        <label for="video-import">Upload Installation Video:</label>
+        <input 
+          type="file" 
+          id="video-import" 
+          accept="video/*" 
+          (change)="onFileSelected($event)"
+          class="file-input"
+        />
       </div>
       
       <button class="btn-n8n" (click)="callN8n()">

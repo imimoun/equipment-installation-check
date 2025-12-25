@@ -131,3 +131,31 @@ p {
 .custom-select:focus {
   border-color: var(--ys-blue);
 }
+
+/* ... keep all existing styles ... */
+
+.file-input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 2px dashed #ddd; /* Dashed border for upload look */
+  border-radius: 8px;
+  background-color: #fafafa;
+  font-size: 0.9rem;
+  color: var(--ys-text);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.file-input:hover {
+  border-color: var(--ys-blue);
+  background-color: #f0f4f8;
+}
+
+/* Optional: style the label slightly differently if needed */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--ys-blue);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
