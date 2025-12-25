@@ -1,0 +1,1 @@
+:root{--yad-blue: #0055a5;--yad-light-blue: #eef4fa;--yad-text: #333333;--yad-white: #ffffff}body{margin:0;padding:0;font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;background-color:var(--yad-light-blue);color:var(--yad-text);display:flex;justify-content:center;align-items:center;height:100vh}

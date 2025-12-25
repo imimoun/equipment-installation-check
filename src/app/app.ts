@@ -1,12 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('equipment-installation-check');
+  title = 'Equipment Installation Check';
+
+  callN8n() {
+    console.log('Calling n8n workflow...');
+    // Add your webhook logic here:
+    // fetch('YOUR_N8N_WEBHOOK_URL', { method: 'POST' });
+  }
 }
