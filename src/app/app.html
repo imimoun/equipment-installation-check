@@ -17,14 +17,14 @@
         <select 
           id="equipment-select" 
           class="custom-select" 
-          [(ngModel)]="selectedEquipment"
-          [disabled]="equipments.length === 0"
-          [ngModelOptions]="{standalone: true}">
+          [ngModel]="selectedEquipment()"
+          (ngModelChange)="selectedEquipment.set($event)"
+          [disabled]="equipments.length === 0">
           @if (equipments.length === 0) {
-            <option value="">Loading equipment...</option>
+            <option [ngValue]="null">Loading equipment...</option>
           }
-          @for (item of equipments; track item) {
-            <option [value]="item">{{ item }}</option>
+          @for (item of equipments; track item.id) {
+            <option [ngValue]="item">{{ item.name }}</option>
           }
         </select>
       </div>

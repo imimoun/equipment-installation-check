@@ -2,6 +2,11 @@ import { Component, signal, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+interface Equipment {
+  id: string | number;
+  name: string;
+}
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -13,9 +18,9 @@ export class App implements OnInit {
   private http = inject(HttpClient);
   title = 'Equipment Installation Check';
   
-  // Initialize as empty array
-  equipments: string[] = [];
-  selectedEquipment = signal('');
+  // Changed to store objects instead of strings
+  equipments: Equipment[] = [];
+  selectedEquipment = signal<Equipment | null>(null);
   
   selectedFile = signal<File | null>(null);
 
@@ -23,30 +28,33 @@ export class App implements OnInit {
     this.fetchEquipments();
   }
 
-fetchEquipments() {
+  fetchEquipments() {
     const apiUrl = 'https://yad-sarah.net/lending/wp-json/custom/v1/get_products';
     
     this.http.get<any>(apiUrl).subscribe({
       next: (response) => {
-        // 1. Determine if the response itself is the array or if it's inside a property
         let dataArray = Array.isArray(response) ? response : (response.data || response.products || []);
 
-        // 2. Map the data to get the 'name' field
         if (Array.isArray(dataArray)) {
-          this.equipments = dataArray.map((item: any) => item.name).filter(name => !!name);
+          // Map both ID and Name
+          this.equipments = dataArray
+            .filter((item: any) => !!item.name)
+            .map((item: any) => ({
+              id: item.id || item.ID || 'N/A', // Support different case variations
+              name: item.name
+            }));
           
-          // 3. Set default selection
           if (this.equipments.length > 0) {
             this.selectedEquipment.set(this.equipments[0]);
           }
         } else {
           console.error('API response format not recognized', response);
-          this.equipments = ['Format Error'];
+          this.equipments = [{ id: 'error', name: 'Format Error' }];
         }
       },
       error: (err) => {
         console.error('Failed to load equipments', err);
-        this.equipments = ['Error loading equipment'];
+        this.equipments = [{ id: 'error', name: 'Error loading equipment' }];
       }
     });
   }
@@ -59,6 +67,11 @@ fetchEquipments() {
   }
 
   async callN8n() {
+    const equipment = this.selectedEquipment();
+    if (!equipment) {
+      alert('Please select an equipment.');
+      return;
+    }
     if (!this.selectedFile()) {
       alert('Please select a video file first.');
       return;
@@ -74,7 +87,8 @@ fetchEquipments() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          equipment: this.selectedEquipment(),
+          equipmentID: equipment.id, // Now sending ID
+          equipmentName: equipment.name, // Sending Name
           timestamp: new Date().toISOString(),
           videoName: this.selectedFile()?.name,
           videoData: base64File
