@@ -10,7 +10,20 @@
   <main class="main-container">
     <div class="card">
       <h1>Equipment Installation</h1>
-      <p>Click the button below to trigger the automated installation check via n8n.</p>
+      <p>Select the equipment and click the button to trigger the automated check.</p>
+      
+      <div class="form-group">
+        <label for="equipment-select">Select Equipment:</label>
+        <select 
+          id="equipment-select" 
+          class="custom-select" 
+          [(ngModel)]="selectedEquipment"
+          [ngModelOptions]="{standalone: true}">
+          @for (item of equipments; track item) {
+            <option [value]="item">{{ item }}</option>
+          }
+        </select>
+      </div>
       
       <button class="btn-n8n" (click)="callN8n()">
         <span class="icon">⚡</span>

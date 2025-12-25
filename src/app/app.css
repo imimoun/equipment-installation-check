@@ -97,3 +97,37 @@ p {
   font-size: 0.85rem;
   color: #888;
 }
+
+.form-group {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--ys-blue);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 1rem;
+  color: var(--ys-text);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none; /* Removes default browser arrow */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+.custom-select:focus {
+  border-color: var(--ys-blue);
+}
